@@ -58,7 +58,7 @@ And here. | Okay. | I think we get it.
 1. Use just 1s if you want!
 1. And last but not least, let's not forget embedded images:
 
-![React Logo w/ Text](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg)
+![React Logo w/ Text](https://upload.wikimedia.org/wikipedia/commons/9/99/Nspas18.jpg)
 
 `;
 
