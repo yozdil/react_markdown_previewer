@@ -7,36 +7,109 @@ import {
   Header,
   Icon,
   Segment,
+  Menu,
 } from "semantic-ui-react";
 
 import marked from "marked";
+import { useState } from "react";
 
-const message = "";
+const initial = `
+# Welcome to my React Markdown Previewer!
 
-function createMarkup() {
-  let rawMarkup = marked("# HERE", { sanitize: true });
+## This is a sub-heading...
+### And here's some other cool stuff:
+
+Heres some code, \`<div></div>\`, between 2 backticks.
+
+\`\`\`
+// this is multi-line code:
+
+const anotherExample = 
+(firstLine, lastLine) => {
+  if (firstLine == '\`\`\`' 
+  && lastLine == '\`\`\`') {
+    return multiLineCode;
+  }
+}
+\`\`\`
+
+You can also make text **bold**... whoa!
+Or _italic_.
+Or... wait for it... **_both!_**
+And feel free to go crazy ~~crossing stuff out~~.
+
+There's also [links](https://www.freecodecamp.com), and
+> Block Quotes!
+
+And if you want to get really crazy, even tables:
+
+Wild Header | Crazy Header | Another Header?
+------------ | ------------- | -------------
+Your content can | be here, and it | can be here....
+And here. | Okay. | I think we get it.
+
+- And of course there are lists.
+  - Some are bulleted.
+     - With different indentation levels.
+        - That look like this.
+
+
+1. And there are numbererd lists too.
+1. Use just 1s if you want!
+1. And last but not least, let's not forget embedded images:
+
+![React Logo w/ Text](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg)
+
+`;
+
+function createMarkup(input) {
+  marked.setOptions({
+    breaks: true,
+  });
+  let rawMarkup = marked(input, { sanitize: true });
   return { __html: rawMarkup };
 }
 
 function App() {
+  const [message, setMessage] = useState(initial);
+
   return (
-    <Container className="App">
-      <Form>
-        <Header as="h2" image={<Icon name="write" />} content="Editor" />
-        <TextArea
-          id="editor"
-          rows={5}
-          value="The value from here should go into #HERE!"
-        />
-      </Form>
-      <Divider />
-      <Form>
-        <Header as="h2" image={<Icon name="eye" />} content="Preview" />
-        <Segment>
-          <div id="preview" dangerouslySetInnerHTML={createMarkup()} />
-        </Segment>
-      </Form>
-    </Container>
+    <>
+      <Menu inverted fixed="top">
+        <Menu.Item position="left">
+          <Header as="h1" color="grey">
+            Markdown Previewer
+          </Header>
+        </Menu.Item>
+      </Menu>
+      <Container className="App">
+        <Form>
+          <Header as="h2" image={<Icon name="write" />} content="Editor" />
+          <TextArea
+            id="editor"
+            rows={15}
+            value={message}
+            onChange={(e, { value }) => setMessage(value)}
+          />
+        </Form>
+        <Divider />
+        <Form>
+          <Header as="h2" image={<Icon name="eye" />} content="Preview" />
+          <Segment>
+            <div id="preview" dangerouslySetInnerHTML={createMarkup(message)} />
+          </Segment>
+        </Form>
+      </Container>
+      <Menu inverted fixed="bottom">
+        <Menu.Item position="right">
+          <a href="https://yamacozdil.com/">
+            <Header as="h3" color="grey">
+              by Yamac Ozdil
+            </Header>
+          </a>
+        </Menu.Item>
+      </Menu>
+    </>
   );
 }
 
