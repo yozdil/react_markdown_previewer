@@ -12,4 +12,4 @@
 ## Setup
 
 1. Install dependencies with `npm install`.
-2. Right after `npm start` and write some markdown!
+2. Right after `npm start` and write some markdown, see the results live!
